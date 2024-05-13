@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
+import Confetti from "react-confetti";
 
 export default function Bar() {
   const [count, setCount] = useState(0);
@@ -21,6 +23,8 @@ export default function Bar() {
       clearInterval(intervalId);
     };
   }, []);
+  const size = useWindowSize();
+
 
   return (
     <div className="flex flex-col gap-10 my-10">
@@ -32,9 +36,12 @@ export default function Bar() {
           style={{ width: `${count}%` }}
         ></div>
       </div>
-      <h1 className={`text-xl ${status ? "text-green-500 " : "text-yellow-500 "}`}>
+      <h1
+        className={`text-xl ${status ? "text-green-500 " : "text-yellow-500 "}`}
+      >
         {!status ? "Loading..." : "Completed"}
       </h1>
+      {status && <Confetti width={size.width} height={size.height} />}
     </div>
   );
 }
